@@ -1,10 +1,9 @@
-const app = require('./app')
-const http = require('http')
-const PORT = process.env.PORT || 3000
+const app = require('./app');
+const http = require('http');
+const config = require('./utils/config');
 
 const server = http.createServer(app)
 
-server.listen(PORT, () => {
-  console.log(`App is running on port ${PORT}...`)
+server.listen(config.PORT, () => {
+  console.log(`App is running on port ${config.PORT}...`)
 })
-
