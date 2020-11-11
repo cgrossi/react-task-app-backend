@@ -13,6 +13,7 @@ const taskSchema = new mongoose.Schema({
 taskSchema.set('toJSON', {
   transform: (doc, ret) => {
     ret.id = ret._id.toString()
+    ret.date = ret.date.toString()
     delete ret._id
     delete ret.__v
   }

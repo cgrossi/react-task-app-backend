@@ -17,4 +17,20 @@ tasksRouter.post('/', async (req, res) => {
   res.status(201).json(returnedTask)
 })
 
+tasksRouter.put('/:id', async (req, res) => {
+  const updates = {...req.body}
+
+  await Task.findByIdAndUpdate(req.params.id, updates, (err, updatedTask) => {
+    if(!err) {
+      res.json(updatedTask)
+    }
+  })
+})
+
+tasksRouter.delete('/:id', async (req, res) => {
+  await Task.findByIdAndRemove(req.params.id)
+  
+  res.status(204).end()
+})
+
 module.exports = tasksRouter
