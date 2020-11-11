@@ -20,7 +20,7 @@ tasksRouter.post('/', async (req, res) => {
 tasksRouter.put('/:id', async (req, res) => {
   const updates = {...req.body}
 
-  await Task.findByIdAndUpdate(req.params.id, updates, (err, updatedTask) => {
+  await Task.findByIdAndUpdate(req.params.id, updates, {new: true}, (err, updatedTask) => {
     if(!err) {
       res.json(updatedTask)
     }
