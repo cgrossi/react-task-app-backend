@@ -22,9 +22,9 @@ describe('When there is initially one user in the db', () => {
   })
 
   test('Creation of a new user succeeds', async () => {
-    const usersAtStart = await User.find({})
+    const getUsersStart = await User.find({})
+    const usersAtStart = getUsersStart.map(user => user.toJSON())
 
-    console.log(usersAtStart)
     const user = {
       username: "newOne",
       name: "new",
@@ -37,10 +37,16 @@ describe('When there is initially one user in the db', () => {
       .expect(201)
       .expect('Content-Type', /application\/json/)
 
-    const usersAtEnd = await User.find({})
+    const getUsersEnd = await User.find({})
+    const usersAtEnd = getUsersEnd.map(user => user.toJSON())
     expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
 
     const usernames = usersAtEnd.map(user => user.username)
     expect(usernames).toContain(user.username)
   })
+})
+
+afterAll(done => {
+  mongoose.connection.close()
+  done()
 })
