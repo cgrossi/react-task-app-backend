@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const tasksRouter = require('./controllers/tasks');
+const usersRouter = require('./controllers/users');
 const mongoose = require('mongoose');
 const config = require('./utils/config');
 
@@ -16,8 +17,9 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
     console.log(`error: ${e}`)
   })
 
-app.use(cors())
-app.use(bodyParser.json())
-app.use('/api/tasks', tasksRouter)
+app.use(cors());
+app.use(bodyParser.json());
+app.use('/api/tasks', tasksRouter);
+app.use('/api/users', usersRouter);
 
 module.exports = app
