@@ -1,5 +1,6 @@
 const tasksRouter = require('express').Router()
 const Task = require('../models/task');
+const User = require('../models/user');
 
 tasksRouter.get('/', async (req, res) => {
   const tasks = await Task.find({})
@@ -8,11 +9,20 @@ tasksRouter.get('/', async (req, res) => {
 })
 
 tasksRouter.post('/', async (req, res) => {
+  const body = req.body
+
+  const user = await User.findById(body.userId)
+
   const task = new Task({
-    ...req.body, date: new Date()
+    title: body.title,
+    completed: body.completed,
+    date: new Date(),
+    user: user._id
   })
 
   const returnedTask = await task.save()
+  user.tasks = user.tasks.concat(returnedTask._id)
+  await user.save()
 
   res.status(201).json(returnedTask)
 })

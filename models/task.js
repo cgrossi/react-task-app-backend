@@ -6,9 +6,12 @@ const taskSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  date: Date
+  date: Date,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
-
 
 taskSchema.set('toJSON', {
   transform: (doc, ret) => {
