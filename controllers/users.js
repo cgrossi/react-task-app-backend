@@ -3,7 +3,7 @@ const usersRouter = require('express').Router()
 const User = require('../models/user')
 
 usersRouter.get('/', async (req, res) => {
-  let users = await User.find({})
+  let users = await User.find({}).populate('tasks', { title: 1, date: 1 })
 
   res.json(users);
 })
